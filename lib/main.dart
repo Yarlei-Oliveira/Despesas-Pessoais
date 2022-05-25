@@ -96,6 +96,16 @@ class _MyHomePageState extends State<MyHomePage> {
     final appBar = AppBar(
       title: const Text('Despesas Pessoais'),
       actions: [
+        if (!isLandscape)
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  _showChart = !_showChart;
+                });
+              },
+              icon: _showChart
+                  ? Icon(Icons.chat_bubble_rounded)
+                  : Icon(Icons.chat_bubble_outline_rounded)),
         IconButton(
           icon: const Icon(Icons.add),
           onPressed: () => _openTransactionFormModal(context),
@@ -113,19 +123,21 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Exibir Grarfico'),
-                Switch(
-                    value: _showChart,
-                    onChanged: (value) {
-                      setState(() {
-                        _showChart = value;
-                      });
-                    }),
-              ],
-            ),
+            isLandscape
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Exibir Grarfico'),
+                      Switch(
+                          value: _showChart,
+                          onChanged: (value) {
+                            setState(() {
+                              _showChart = value;
+                            });
+                          }),
+                    ],
+                  )
+                : Text(''),
             _showChart
                 ? Column(
                     children: [
